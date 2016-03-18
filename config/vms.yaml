@@ -1,0 +1,29 @@
+---
+ssh:
+  insert_key: false
+
+vms:
+  - name: "puppet-master"
+    box:  "puppetlabs/centos-7.2-64-nocm"
+    roles:
+      - setup_control_repo
+      - get_modules
+      - puppet_master
+      - customize_pe_via_hiera
+      - el-tools
+      - el-stop-firewall
+      - el-fix-path
+      - 4gb-memory
+      - base
+
+  - name: "bitbucket"
+    box:  "puppetlabs/centos-7.2-64-nocm"
+    roles:
+      - puppet_agent
+      - el-tools
+      - el-stop-firewall
+      - el-fix-path
+      - 2gb-memory
+      - 2_cpus
+      - base
+

@@ -1,0 +1,64 @@
+---
+roles:
+
+  2_cpus:
+    providers:
+      - type: virtualbox
+        customize:
+          - [modifyvm, !ruby/sym id, '--cpus', 2]
+
+  puppet_master:
+    provisioners:
+      - type: pe_bootstrap
+        role: :master
+        answer_extras:
+          - "q_puppetmaster_r10k_remote='ssh://git@bitbucket:7999/pupp/control-repo.git'"
+          - "q_puppetmaster_r10k_private_key=/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
+          - "q_puppetmaster_code_manager_auto_configure=y"
+          - "q_puppetmaster_file_sync_service_enabled=y"
+
+  setup_control_repo:
+    provisioners:
+      - type: shell
+        inline: "yes | cp /vagrant/environment.conf /etc/puppetlabs/code/environments/production/environment.conf"
+      - type: shell
+        inline: "yes | cp -r /vagrant/manifests /etc/puppetlabs/code/environments/production/"
+      - type: shell
+        inline: "yes | cp -r /vagrant/site /etc/puppetlabs/code/environments/production/"
+      - type: shell
+        inline: "yes | cp -r /vagrant/scripts /etc/puppetlabs/code/environments/production/"
+
+  get_modules:
+    provisioners:
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-inifile --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-java_ks --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install abrader-gms --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install pltraining-rbac --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install stahnma-epel --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install puppet-archive --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-vcsrepo --modulepath /etc/puppetlabs/code/modules"
+      - type: shell
+        inline: "/bin/chown -R pe-puppet:pe-puppet /etc/puppetlabs/code/modules"
+
+  puppet_agent:
+    provisioners:
+      - type: pe_agent
+        master_vm: 'puppet-master'
+
+  el-tools:
+    provisioners:
+      - type: shell
+        inline: '/usr/bin/yum install telnet vim tree git -y'
+
+  customize_pe_via_hiera:
+    provisioners:
+      - type: shell
+        inline: 'mkdir -p /var/lib/hiera; cp /vagrant/config/hierafiles/defaults.yaml /var/lib/hiera/defaults.yaml'
+
