@@ -103,8 +103,6 @@ Automate the initial setup of BitBucket Server (users, project, and repo creatio
 * https://confluence.atlassian.com/bitbucketserver/automated-setup-for-bitbucket-server-776640098.html
 * https://developer.atlassian.com/static/rest/bitbucket-server/4.3.1/bitbucket-rest.html
 
-Turn this repo into a control-repo that can be used to play with Code Manager.
-
 ## Other Notes
 
 This is based on the puppet-debugging-kit.
