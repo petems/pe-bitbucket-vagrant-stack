@@ -32,9 +32,13 @@ roles:
   puppet_agent:
     provisioners:
       - type: shell
-        inline: "echo 'nameserver 10.0.2.3' > /etc/resolv.conf"
+        inline: "echo 'nameserver 8.8.8.8' > /etc/resolv.conf"
       - type: pe_agent
         master_vm: 'puppet-master'
+      - type: shell
+        inline: 'puppet agent -t || echo "Waiting for the puppet run to finish, then restarting bitbucket to enable dev mode..."; while [[ -f /opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock ]]; do sleep 5; echo -n "." ; done'
+      - type: shell
+        inline: 'service atlbitbucket restart'
 
   el-tools:
     provisioners:
