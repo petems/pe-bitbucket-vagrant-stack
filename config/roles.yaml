@@ -31,6 +31,8 @@ roles:
 
   puppet_agent:
     provisioners:
+      - type: shell
+        inline: "echo 'nameserver 10.0.2.3' > /etc/resolv.conf"
       - type: pe_agent
         master_vm: 'puppet-master'
 
