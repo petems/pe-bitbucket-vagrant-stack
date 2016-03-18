@@ -17,6 +17,13 @@ roles:
           - "q_puppetmaster_code_manager_auto_configure=y"
           - "q_puppetmaster_file_sync_service_enabled=y"
 
+  get_modules:
+    provisioners:
+      - type: shell
+        inline: "r10k puppetfile install --puppetfile /vagrant/Puppetfile --moduledir /etc/puppetlabs/code-staging/modules -v"
+      - type: shell
+        inline: "/bin/chown -R pe-puppet:pe-puppet /etc/puppetlabs/code-staging"
+
   setup_control_repo:
     provisioners:
       - type: shell
@@ -27,25 +34,6 @@ roles:
         inline: "yes | cp -r /vagrant/site /etc/puppetlabs/code/environments/production/"
       - type: shell
         inline: "yes | cp -r /vagrant/scripts /etc/puppetlabs/code/environments/production/"
-
-  get_modules:
-    provisioners:
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-inifile --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-java_ks --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install abrader-gms --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install pltraining-rbac --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install stahnma-epel --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install puppet-archive --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/opt/puppetlabs/bin/puppet module install puppetlabs-vcsrepo --modulepath /etc/puppetlabs/code/modules"
-      - type: shell
-        inline: "/bin/chown -R pe-puppet:pe-puppet /etc/puppetlabs/code/modules"
 
   puppet_agent:
     provisioners:
