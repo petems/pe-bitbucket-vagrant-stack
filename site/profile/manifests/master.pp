@@ -1,8 +1,8 @@
 class profile::master {
 
   service { 'puppet':
-    ensure => stopped,
-    enable => false,
+    ensure => running,
+    enable => true,
   }
 
   #Lay down update-classes.sh for use in r10k postrun_command

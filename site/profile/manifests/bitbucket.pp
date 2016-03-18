@@ -5,8 +5,8 @@ class profile::bitbucket {
   $bitbucket_home      = '/var/atlassian/application-data/bitbucket'
 
   service { 'puppet':
-    ensure => stopped,
-    enable => false,
+    ensure => running,
+    enable => true,
   }
 
   include ::epel
