@@ -33,9 +33,9 @@ roles:
       - type: shell
         inline: "/bin/chown -R pe-puppet:pe-puppet /etc/puppetlabs/code-staging"
       - type: shell
-        inline: "/vagrant/scripts/trigger-file-sync.sh"
+        inline: "/vagrant/scripts/trigger-file-sync.sh && sleep 5"
       - type: shell
-        inline: 'puppet agent -t'
+        inline: 'puppet agent -t || true'
 
   puppet_agent:
     provisioners:
@@ -58,4 +58,15 @@ roles:
       - type: virtualbox
         customize:
           - [modifyvm, !ruby/sym id, '--cpus', 2]
+
+  tune-pe-memory:
+    provisioners:
+      - type: shell
+        inline: "mkdir -p /etc/puppetlabs/{code-staging,code}/environments/production/hieradata"
+      - type: shell
+        inline: "cp -v /vagrant/hieradata/common.yaml /etc/puppetlabs/code-staging/environments/production/hieradata"
+      - type: shell
+        inline: "cp -v /vagrant/hieradata/common.yaml /etc/puppetlabs/code/environments/production/hieradata/"
+      - type: shell
+        inline: "chmod 644 /etc/puppetlabs/code/environments/production/hieradata/common.yaml"
 
