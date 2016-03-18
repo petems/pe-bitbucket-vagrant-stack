@@ -32,6 +32,10 @@ roles:
         inline: "yes | cp -r /vagrant/scripts /etc/puppetlabs/code-staging/environments/production/"
       - type: shell
         inline: "/bin/chown -R pe-puppet:pe-puppet /etc/puppetlabs/code-staging"
+      - type: shell
+        inline: "/vagrant/scripts/trigger-file-sync.sh"
+      - type: shell
+        inline: 'puppet agent -t'
 
   puppet_agent:
     provisioners:
