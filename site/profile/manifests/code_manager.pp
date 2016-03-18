@@ -118,12 +118,12 @@ class profile::code_manager {
   # The creation of a deploy key associated with a project can be automated
   # with this resource; however, in the Vagrant environment, the BitBucket server would need
   # to be up and configured with a Project and r10k username/password before this will work.
-  git_deploy_key { "add_deploy_key_to_PUPP-${::fqdn}":
+  git_deploy_key { "add_deploy_key_to_PUP-${::fqdn}":
     ensure       => present,
     name         => $::fqdn,
     username     => 'r10k',
     password     => 'puppet',
-    project_name => 'PUPP',
+    project_name => 'PUP',
     path         => "${code_manager_ssh_key_file}.pub",
     server_url   => 'http://bitbucket:7990',
     provider     => 'stash',

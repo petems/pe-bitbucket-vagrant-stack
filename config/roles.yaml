@@ -6,7 +6,7 @@ roles:
       - type: pe_bootstrap
         role: :master
         answer_extras:
-          - "q_puppetmaster_r10k_remote='ssh://git@bitbucket:7999/pupp/control-repo.git'"
+          - "q_puppetmaster_r10k_remote='ssh://git@bitbucket:7999/pup/control-repo.git'"
           - "q_puppetmaster_r10k_private_key=/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa"
           - "q_puppetmaster_code_manager_auto_configure=y"
           - "q_puppetmaster_file_sync_service_enabled=y"

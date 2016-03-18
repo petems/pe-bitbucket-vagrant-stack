@@ -57,16 +57,16 @@ After running vagrant up, there's a few things that need to be setup manually...
   * https://marketplace.atlassian.com/plugins/com.atlassian.stash.plugin.stash-web-post-receive-hooks-plugin/server/overview
 
 1. Make a `Project` and a blank `repository` inside that project
-  * I recommend a project called `puppet` (with a short name of `PUPP`)
+  * I recommend a project called `puppet` (with a short name of `PUP`)
   * ... and a repository called `control-repo`
 
 1. Create a user account that code_manager will use to deploy code.
   * Create a user called `r10k` with a password of `puppet`.
-  * Make the r10k user an admin of the `PUPP` project.
+  * Make the r10k user an admin of the `PUP` project.
     * This is needed to allow the automatic creation of deploy keys with abrader/gms.
 
 1. Either use the admin user to test pushing code, or create a user for yourself and add your SSH key to that user.
-  * If making a user for yourself, give your user account read/write or admin privilege to the `PUPP` project.
+  * If making a user for yourself, give your user account read/write or admin privilege to the `PUP` project.
 
 1. Configure the hook on your control repo.
   * Click the `Hooks` tab under the repo's settings.
