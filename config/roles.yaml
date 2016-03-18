@@ -1,12 +1,6 @@
 ---
 roles:
 
-  2_cpus:
-    providers:
-      - type: virtualbox
-        customize:
-          - [modifyvm, !ruby/sym id, '--cpus', 2]
-
   puppet_master:
     provisioners:
       - type: pe_bootstrap
@@ -45,8 +39,9 @@ roles:
       - type: shell
         inline: '/usr/bin/yum install telnet vim tree git -y'
 
-  customize_pe_via_hiera:
-    provisioners:
-      - type: shell
-        inline: 'mkdir -p /var/lib/hiera; cp /vagrant/config/hierafiles/defaults.yaml /var/lib/hiera/defaults.yaml'
+  2_cpus:
+    providers:
+      - type: virtualbox
+        customize:
+          - [modifyvm, !ruby/sym id, '--cpus', 2]
 

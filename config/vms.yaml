@@ -9,7 +9,7 @@ vms:
       - setup_control_repo
       - get_modules
       - puppet_master
-      - customize_pe_via_hiera
+      - pe-memory-tuning2
       - el-tools
       - el-stop-firewall
       - el-fix-path
